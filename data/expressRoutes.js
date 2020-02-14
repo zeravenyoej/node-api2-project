@@ -40,13 +40,16 @@ router.post('/:id/comments', (req, res) => {
 
 });
 
+// GET POSTS
 // When the client makes a `GET` request to `/api/posts`:
 // - If there's an error in retrieving the _posts_ from the database:
 //   - cancel the request.
 //   - respond with HTTP status code `500`.
 //   - return the following JSON object: `{ error: "The posts information could not be retrieved." }`.
 router.get('/', (req, res) => {
-
+    db.find()
+    .then(posts => res.json({message: "array of posts", posts: posts}))
+    .catch(res.status(500).json({error: "the posts information could not be retrieved"}))
 });
 
 // When the client makes a `GET` request to `/api/posts/:id`:
@@ -54,7 +57,7 @@ router.get('/', (req, res) => {
 //   - return HTTP status code `404` (Not Found).
 //   - return the following JSON object: `{ message: "The post with the specified ID does not exist." }`.
 // - If there's an error in retrieving the _post_ from the database:
-//   - cancel the request.
+//   - cancel the request. 
 //   - respond with HTTP status code `500`.
 //   - return the following JSON object: `{ error: "The post information could not be retrieved." }`.
 router.get('/:id', (req, res) => {
